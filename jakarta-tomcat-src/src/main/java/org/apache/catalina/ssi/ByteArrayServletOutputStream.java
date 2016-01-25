@@ -68,7 +68,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
 
 /**
  * Class that extends ServletOuputStream, used as a wrapper
@@ -78,50 +77,40 @@ import javax.servlet.WriteListener;
  * @version $Revision: 1.1 $, $Date: 2002/05/24 04:38:58 $
  * @see ServletOutputStream and ByteArrayOutputStream
  */
-public class ByteArrayServletOutputStream extends ServletOutputStream {
+public class ByteArrayServletOutputStream extends ServletOutputStream
+{
     /**
      * Our buffer to hold the stream
      */
     protected ByteArrayOutputStream _buf = null;
-
+    
     /**
      * Construct a new ServletOutputStream
      *
      */
-    public ByteArrayServletOutputStream() {
+    public ByteArrayServletOutputStream()
+    {
         _buf = new ByteArrayOutputStream();
     }
-
+    
     /**
      * Write our stream to the <code>OutputStream</code> provided.
      *
      * @param out the OutputStream to write this stream to
      * @exception IOException if an input/output error occurs
      */
-    public byte[] toByteArray() {
+    public byte[] toByteArray()
+    {
         return _buf.toByteArray();
     }
-
+    
     /**
      * Write to our buffer
      *
      * @param b The parameter to write
      */
-    public void write(int b) {
+    public void write(int b)
+    {
         _buf.write(b);
-    }
-
-    @Override
-    public boolean isReady()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public void setWriteListener(WriteListener writeListener)
-    {
-        // TODO Auto-generated method stub
-        
     }
 }

@@ -61,28 +61,19 @@
  *
  */
 
-
 package org.apache.catalina.connector;
 
-
-import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.Locale;
-import java.net.Socket;
-import javax.servlet.ServletException;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 
 import org.apache.catalina.Request;
-
 
 /**
  * Facade class that wraps a Catalina-internal <b>Request</b>
@@ -93,273 +84,198 @@ import org.apache.catalina.Request;
  * @version $Revision: 1.4 $ $Date: 2002/05/15 04:24:17 $
  */
 
-public class RequestFacade implements ServletRequest {
-
-
+public class RequestFacade implements ServletRequest
+{
+    
     // ----------------------------------------------------------- Constructors
-
-
+    
     /**
      * Construct a wrapper for the specified request.
      *
      * @param request The request to be wrapped
      */
-    public RequestFacade(Request request) {
-
+    public RequestFacade(Request request)
+    {
+        
         super();
-        this.request = (ServletRequest) request;
-
+        this.request = (ServletRequest)request;
+        
     }
-
-
+    
     // ----------------------------------------------------- Instance Variables
-
-
+    
     /**
      * The wrapped request.
      */
     protected ServletRequest request = null;
-
-
+    
     // --------------------------------------------------------- Public Methods
-
-
+    
     /**
      * Clear facade.
      */
-    public void clear() {
+    public void clear()
+    {
         request = null;
     }
-
-
+    
     // ------------------------------------------------- ServletRequest Methods
-
-
-    public Object getAttribute(String name) {
+    
+    public Object getAttribute(String name)
+    {
         return request.getAttribute(name);
     }
-
-
-    public Enumeration getAttributeNames() {
+    
+    public Enumeration getAttributeNames()
+    {
         return request.getAttributeNames();
     }
-
-
-    public String getCharacterEncoding() {
+    
+    public String getCharacterEncoding()
+    {
         return request.getCharacterEncoding();
     }
-
-
+    
     public void setCharacterEncoding(String env)
-        throws java.io.UnsupportedEncodingException {
+        throws java.io.UnsupportedEncodingException
+    {
         request.setCharacterEncoding(env);
     }
-
-
-    public int getContentLength() {
+    
+    public int getContentLength()
+    {
         return request.getContentLength();
     }
-
-
-    public String getContentType() {
+    
+    public String getContentType()
+    {
         return request.getContentType();
     }
-
-
+    
     public ServletInputStream getInputStream()
-        throws IOException {
+        throws IOException
+    {
         return request.getInputStream();
     }
-
-
-    public String getParameter(String name) {
+    
+    public String getParameter(String name)
+    {
         return request.getParameter(name);
     }
-
-
-    public Enumeration getParameterNames() {
+    
+    public Enumeration getParameterNames()
+    {
         return request.getParameterNames();
     }
-
-
-    public String[] getParameterValues(String name) {
+    
+    public String[] getParameterValues(String name)
+    {
         return request.getParameterValues(name);
     }
-
-
-    public Map getParameterMap() {
+    
+    public Map getParameterMap()
+    {
         return request.getParameterMap();
     }
-
-
-    public String getProtocol() {
+    
+    public String getProtocol()
+    {
         return request.getProtocol();
     }
-
-
-    public String getScheme() {
+    
+    public String getScheme()
+    {
         return request.getScheme();
     }
-
-
-    public String getServerName() {
+    
+    public String getServerName()
+    {
         return request.getServerName();
     }
-
-
-    public int getServerPort() {
+    
+    public int getServerPort()
+    {
         return request.getServerPort();
     }
-
-
+    
     public BufferedReader getReader()
-        throws IOException {
+        throws IOException
+    {
         return request.getReader();
     }
-
-
-    public String getRemoteAddr() {
+    
+    public String getRemoteAddr()
+    {
         return request.getRemoteAddr();
     }
-
-
-    public String getRemoteHost() {
+    
+    public String getRemoteHost()
+    {
         return request.getRemoteHost();
     }
-
-
-    public void setAttribute(String name, Object o) {
+    
+    public void setAttribute(String name, Object o)
+    {
         request.setAttribute(name, o);
     }
-
-
-    public void removeAttribute(String name) {
+    
+    public void removeAttribute(String name)
+    {
         request.removeAttribute(name);
     }
-
-
-    public Locale getLocale() {
+    
+    public Locale getLocale()
+    {
         return request.getLocale();
     }
-
-
-    public Enumeration getLocales() {
+    
+    public Enumeration getLocales()
+    {
         return request.getLocales();
     }
-
-
-    public boolean isSecure() {
+    
+    public boolean isSecure()
+    {
         return request.isSecure();
     }
-
-
-    public RequestDispatcher getRequestDispatcher(String path) {
+    
+    public RequestDispatcher getRequestDispatcher(String path)
+    {
         // TODO : Facade !!
         return request.getRequestDispatcher(path);
     }
-
-
-    public String getRealPath(String path) {
+    
+    public String getRealPath(String path)
+    {
         return request.getRealPath(path);
     }
-
-
-    @Override
-    public long getContentLengthLong()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
+    
     @Override
     public int getRemotePort()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
-
+    
     @Override
     public String getLocalName()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
+    
     @Override
     public String getLocalAddr()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
+    
     @Override
     public int getLocalPort()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
-
-    @Override
-    public ServletContext getServletContext()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public AsyncContext startAsync()
-        throws IllegalStateException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse)
-        throws IllegalStateException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public boolean isAsyncStarted()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public boolean isAsyncSupported()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public AsyncContext getAsyncContext()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public DispatcherType getDispatcherType()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
+    
 }

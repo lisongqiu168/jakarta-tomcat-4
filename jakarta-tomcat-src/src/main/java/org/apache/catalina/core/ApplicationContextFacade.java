@@ -61,44 +61,18 @@
  *
  */
 
-
 package org.apache.catalina.core;
 
-
 import java.io.InputStream;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.security.PrivilegedExceptionAction;
-import java.security.PrivilegedActionException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.EventListener;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import javax.naming.NamingException;
-import javax.naming.Binding;
-import javax.naming.directory.DirContext;
-import javax.servlet.Filter;
-import javax.servlet.FilterRegistration;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
-import javax.servlet.ServletRegistration.Dynamic;
-import javax.servlet.SessionCookieConfig;
-import javax.servlet.SessionTrackingMode;
-import javax.servlet.descriptor.JspConfigDescriptor;
-import javax.servlet.ServletContextAttributeEvent;
-import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.http.HttpServletRequest;
-
 
 /**
  * Facade object which masks the internal <code>ApplicationContext</code>
@@ -108,388 +82,155 @@ import javax.servlet.http.HttpServletRequest;
  * @version $Revision: 1.3 $ $Date: 2001/07/22 20:25:08 $
  */
 
-public final class ApplicationContextFacade
-    implements ServletContext {
-
-
+public final class ApplicationContextFacade implements ServletContext
+{
+    
     // ----------------------------------------------------------- Constructors
-
-
+    
     /**
      * Construct a new instance of this class, associated with the specified
      * Context instance.
      *
      * @param context The associated Context instance
      */
-    public ApplicationContextFacade(ApplicationContext context) {
+    public ApplicationContextFacade(ApplicationContext context)
+    {
         super();
         this.context = context;
     }
-
-
+    
     // ----------------------------------------------------- Instance Variables
-
-
+    
     /**
      * Wrapped application context.
      */
     private ApplicationContext context = null;
-
-
+    
     // ------------------------------------------------- ServletContext Methods
-
-
-    public ServletContext getContext(String uripath) {
+    
+    public ServletContext getContext(String uripath)
+    {
         ServletContext theContext = context.getContext(uripath);
-        if ((theContext != null) &&
-            (theContext instanceof ApplicationContext))
-            theContext = ((ApplicationContext) theContext).getFacade();
+        if ((theContext != null) && (theContext instanceof ApplicationContext))
+            theContext = ((ApplicationContext)theContext).getFacade();
         return (theContext);
     }
-
-
-    public int getMajorVersion() {
+    
+    public int getMajorVersion()
+    {
         return context.getMajorVersion();
     }
-
-
-    public int getMinorVersion() {
+    
+    public int getMinorVersion()
+    {
         return context.getMinorVersion();
     }
-
-
-    public String getMimeType(String file) {
+    
+    public String getMimeType(String file)
+    {
         return context.getMimeType(file);
     }
-
-
-    public Set getResourcePaths(String path) {
+    
+    public Set getResourcePaths(String path)
+    {
         return context.getResourcePaths(path);
     }
-
-
+    
     public URL getResource(String path)
-        throws MalformedURLException {
+        throws MalformedURLException
+    {
         return context.getResource(path);
     }
-
-
-    public InputStream getResourceAsStream(String path) {
+    
+    public InputStream getResourceAsStream(String path)
+    {
         return context.getResourceAsStream(path);
     }
-
-
-    public RequestDispatcher getRequestDispatcher(String path) {
+    
+    public RequestDispatcher getRequestDispatcher(String path)
+    {
         return context.getRequestDispatcher(path);
     }
-
-
-    public RequestDispatcher getNamedDispatcher(String name) {
+    
+    public RequestDispatcher getNamedDispatcher(String name)
+    {
         return context.getNamedDispatcher(name);
     }
-
-
+    
     public Servlet getServlet(String name)
-        throws ServletException {
+        throws ServletException
+    {
         return context.getServlet(name);
     }
-
-
-    public Enumeration getServlets() {
+    
+    public Enumeration getServlets()
+    {
         return context.getServlets();
     }
-
-
-    public Enumeration getServletNames() {
+    
+    public Enumeration getServletNames()
+    {
         return context.getServletNames();
     }
-
-
-    public void log(String msg) {
+    
+    public void log(String msg)
+    {
         context.log(msg);
     }
-
-
-    public void log(Exception exception, String msg) {
+    
+    public void log(Exception exception, String msg)
+    {
         context.log(exception, msg);
     }
-
-
-    public void log(String message, Throwable throwable) {
+    
+    public void log(String message, Throwable throwable)
+    {
         context.log(message, throwable);
     }
-
-
-    public String getRealPath(String path) {
+    
+    public String getRealPath(String path)
+    {
         return context.getRealPath(path);
     }
-
-
-    public String getServerInfo() {
+    
+    public String getServerInfo()
+    {
         return context.getServerInfo();
     }
-
-
-    public String getInitParameter(String name) {
+    
+    public String getInitParameter(String name)
+    {
         return context.getInitParameter(name);
     }
-
-
-    public Enumeration getInitParameterNames() {
+    
+    public Enumeration getInitParameterNames()
+    {
         return context.getInitParameterNames();
     }
-
-
-    public Object getAttribute(String name) {
+    
+    public Object getAttribute(String name)
+    {
         return context.getAttribute(name);
     }
-
-
-    public Enumeration getAttributeNames() {
+    
+    public Enumeration getAttributeNames()
+    {
         return context.getAttributeNames();
     }
-
-
-    public void setAttribute(String name, Object object) {
+    
+    public void setAttribute(String name, Object object)
+    {
         context.setAttribute(name, object);
     }
-
-
-    public void removeAttribute(String name) {
+    
+    public void removeAttribute(String name)
+    {
         context.removeAttribute(name);
     }
-
-
-    public String getServletContextName() {
+    
+    public String getServletContextName()
+    {
         return context.getServletContextName();
     }
-
-
-    @Override
-    public String getContextPath()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public int getEffectiveMajorVersion()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    @Override
-    public int getEffectiveMinorVersion()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    @Override
-    public boolean setInitParameter(String name, String value)
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public Dynamic addServlet(String servletName, String className)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Dynamic addServlet(String servletName, Servlet servlet)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public <T extends Servlet> T createServlet(Class<T> clazz)
-        throws ServletException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public ServletRegistration getServletRegistration(String servletName)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Map<String, ? extends ServletRegistration> getServletRegistrations()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, String className)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Class<? extends Filter> filterClass)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public <T extends Filter> T createFilter(Class<T> clazz)
-        throws ServletException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public FilterRegistration getFilterRegistration(String filterName)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Map<String, ? extends FilterRegistration> getFilterRegistrations()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public SessionCookieConfig getSessionCookieConfig()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public void setSessionTrackingModes(Set<SessionTrackingMode> sessionTrackingModes)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public Set<SessionTrackingMode> getDefaultSessionTrackingModes()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Set<SessionTrackingMode> getEffectiveSessionTrackingModes()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public void addListener(String className)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public <T extends EventListener> void addListener(T t)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public void addListener(Class<? extends EventListener> listenerClass)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public <T extends EventListener> T createListener(Class<T> clazz)
-        throws ServletException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public JspConfigDescriptor getJspConfigDescriptor()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public ClassLoader getClassLoader()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public void declareRoles(String... roleNames)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public String getVirtualServerName()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
+    
 }

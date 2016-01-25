@@ -61,19 +61,16 @@
  *
  */
 
-
 package org.apache.catalina.connector;
 
-
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
-import javax.servlet.ServletException;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
-import org.apache.catalina.Response;
 
+import org.apache.catalina.Response;
 
 /**
  * Facade class that wraps a Catalina-internal <b>Response</b>
@@ -83,216 +80,196 @@ import org.apache.catalina.Response;
  * @version $Revision: 1.6 $ $Date: 2002/05/15 04:24:17 $
  */
 
-public class ResponseFacade implements ServletResponse {
-
-
+public class ResponseFacade implements ServletResponse
+{
+    
     // ----------------------------------------------------------- Constructors
-
-
+    
     /**
      * Construct a wrapper for the specified response.
      *
      * @param response The response to be wrapped
      */
-    public ResponseFacade(Response response) {
+    public ResponseFacade(Response response)
+    {
         this.resp = response;
-        this.response = (ServletResponse) response;
+        this.response = (ServletResponse)response;
     }
-
-
+    
     // ----------------------------------------------------- Instance Variables
-
-
+    
     /**
      * The wrapped response.
      */
     protected ServletResponse response = null;
-
-
+    
     /**
      * The wrapped response.
      */
     protected Response resp = null;
-
-
+    
     // --------------------------------------------------------- Public Methods
-
-
+    
     /**
      * Clear facade.
      */
-    public void clear() {
+    public void clear()
+    {
         response = null;
         resp = null;
     }
-
-
-    public void finish() {
-
+    
+    public void finish()
+    {
+        
         resp.setSuspended(true);
-
+        
     }
-
-
-    public boolean isFinished() {
-
+    
+    public boolean isFinished()
+    {
+        
         return resp.isSuspended();
-
+        
     }
-
-
+    
     // ------------------------------------------------ ServletResponse Methods
-
-
-    public String getCharacterEncoding() {
+    
+    public String getCharacterEncoding()
+    {
         return response.getCharacterEncoding();
     }
-
-
+    
     public ServletOutputStream getOutputStream()
-        throws IOException {
-
+        throws IOException
+    {
+        
         //        if (isFinished())
         //            throw new IllegalStateException
         //                (/*sm.getString("responseFacade.finished")*/);
-
+        
         ServletOutputStream sos = response.getOutputStream();
         if (isFinished())
             resp.setSuspended(true);
         return (sos);
-
+        
     }
-
-
+    
     public PrintWriter getWriter()
-        throws IOException {
-
+        throws IOException
+    {
+        
         //        if (isFinished())
         //            throw new IllegalStateException
         //                (/*sm.getString("responseFacade.finished")*/);
-
+        
         PrintWriter writer = response.getWriter();
         if (isFinished())
             resp.setSuspended(true);
         return (writer);
-
+        
     }
-
-
-    public void setContentLength(int len) {
-
+    
+    public void setContentLength(int len)
+    {
+        
         if (isCommitted())
             return;
-
+            
         response.setContentLength(len);
-
+        
     }
-
-
-    public void setContentType(String type) {
-
+    
+    public void setContentType(String type)
+    {
+        
         if (isCommitted())
             return;
-
+            
         response.setContentType(type);
-
+        
     }
-
-
-    public void setBufferSize(int size) {
-
+    
+    public void setBufferSize(int size)
+    {
+        
         if (isCommitted())
-            throw new IllegalStateException
-                (/*sm.getString("responseBase.reset.ise")*/);
-
+            throw new IllegalStateException(/*sm.getString("responseBase.reset.ise")*/);
+            
         response.setBufferSize(size);
-
+        
     }
-
-
-    public int getBufferSize() {
+    
+    public int getBufferSize()
+    {
         return response.getBufferSize();
     }
-
-
+    
     public void flushBuffer()
-        throws IOException {
-
+        throws IOException
+    {
+        
         if (isFinished())
             //            throw new IllegalStateException
             //                (/*sm.getString("responseFacade.finished")*/);
             return;
-
+            
         resp.setAppCommitted(true);
-
+        
         response.flushBuffer();
-
+        
     }
-
-
-    public void resetBuffer() {
-
+    
+    public void resetBuffer()
+    {
+        
         if (isCommitted())
-            throw new IllegalStateException
-                (/*sm.getString("responseBase.reset.ise")*/);
-
+            throw new IllegalStateException(/*sm.getString("responseBase.reset.ise")*/);
+            
         response.resetBuffer();
-
+        
     }
-
-
-    public boolean isCommitted() {
+    
+    public boolean isCommitted()
+    {
         return (resp.isAppCommitted());
     }
-
-
-    public void reset() {
-
+    
+    public void reset()
+    {
+        
         if (isCommitted())
-            throw new IllegalStateException
-                (/*sm.getString("responseBase.reset.ise")*/);
-
+            throw new IllegalStateException(/*sm.getString("responseBase.reset.ise")*/);
+            
         response.reset();
-
+        
     }
-
-
-    public void setLocale(Locale loc) {
-
+    
+    public void setLocale(Locale loc)
+    {
+        
         if (isCommitted())
             return;
-
+            
         response.setLocale(loc);
     }
-
-
-    public Locale getLocale() {
+    
+    public Locale getLocale()
+    {
         return response.getLocale();
     }
-
-
+    
     @Override
     public String getContentType()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
+    
     @Override
     public void setCharacterEncoding(String charset)
     {
         // TODO Auto-generated method stub
         
     }
-
-
-    @Override
-    public void setContentLengthLong(long len)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
 }

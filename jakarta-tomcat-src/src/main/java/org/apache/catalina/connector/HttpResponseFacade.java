@@ -61,19 +61,14 @@
  *
  */
 
-
 package org.apache.catalina.connector;
 
-
 import java.io.IOException;
-import java.util.Collection;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
-import org.apache.catalina.HttpResponse;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.HttpResponse;
 
 /**
  * Facade class that wraps a Catalina-internal <b>HttpResponse</b>
@@ -84,238 +79,188 @@ import org.apache.catalina.HttpResponse;
  * @version $Revision: 1.5 $ $Date: 2001/09/28 16:53:49 $
  */
 
-public final class HttpResponseFacade
-    extends ResponseFacade
-    implements HttpServletResponse {
-
-
+public final class HttpResponseFacade extends ResponseFacade implements HttpServletResponse
+{
+    
     // ----------------------------------------------------------- Constructors
-
-
+    
     /**
      * Construct a wrapper for the specified response.
      *
      * @param response The response to be wrapped
      */
-    public HttpResponseFacade(HttpResponse response) {
+    public HttpResponseFacade(HttpResponse response)
+    {
         super(response);
     }
-
-
+    
     // -------------------------------------------- HttpServletResponse Methods
-
-
-    public void addCookie(Cookie cookie) {
-
+    
+    public void addCookie(Cookie cookie)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).addCookie(cookie);
-
+            
+        ((HttpServletResponse)response).addCookie(cookie);
+        
     }
-
-
-    public boolean containsHeader(String name) {
-        return ((HttpServletResponse) response).containsHeader(name);
+    
+    public boolean containsHeader(String name)
+    {
+        return ((HttpServletResponse)response).containsHeader(name);
     }
-
-
-    public String encodeURL(String url) {
-        return ((HttpServletResponse) response).encodeURL(url);
+    
+    public String encodeURL(String url)
+    {
+        return ((HttpServletResponse)response).encodeURL(url);
     }
-
-
-    public String encodeRedirectURL(String url) {
-        return ((HttpServletResponse) response).encodeRedirectURL(url);
+    
+    public String encodeRedirectURL(String url)
+    {
+        return ((HttpServletResponse)response).encodeRedirectURL(url);
     }
-
-
-    public String encodeUrl(String url) {
-        return ((HttpServletResponse) response).encodeURL(url);
+    
+    public String encodeUrl(String url)
+    {
+        return ((HttpServletResponse)response).encodeURL(url);
     }
-
-
-    public String encodeRedirectUrl(String url) {
-        return ((HttpServletResponse) response).encodeRedirectURL(url);
+    
+    public String encodeRedirectUrl(String url)
+    {
+        return ((HttpServletResponse)response).encodeRedirectURL(url);
     }
-
-
+    
     public void sendError(int sc, String msg)
-        throws IOException {
-
+        throws IOException
+    {
+        
         if (isCommitted())
-            throw new IllegalStateException
-                (/*sm.getString("responseBase.reset.ise")*/);
-
+            throw new IllegalStateException(/*sm.getString("responseBase.reset.ise")*/);
+            
         resp.setAppCommitted(true);
-
-        ((HttpServletResponse) response).sendError(sc, msg);
-
+        
+        ((HttpServletResponse)response).sendError(sc, msg);
+        
     }
-
-
+    
     public void sendError(int sc)
-        throws IOException {
-
+        throws IOException
+    {
+        
         if (isCommitted())
-            throw new IllegalStateException
-                (/*sm.getString("responseBase.reset.ise")*/);
-
+            throw new IllegalStateException(/*sm.getString("responseBase.reset.ise")*/);
+            
         resp.setAppCommitted(true);
-
-        ((HttpServletResponse) response).sendError(sc);
-
+        
+        ((HttpServletResponse)response).sendError(sc);
+        
     }
-
-
+    
     public void sendRedirect(String location)
-        throws IOException {
-
+        throws IOException
+    {
+        
         if (isCommitted())
-            throw new IllegalStateException
-                (/*sm.getString("responseBase.reset.ise")*/);
-
+            throw new IllegalStateException(/*sm.getString("responseBase.reset.ise")*/);
+            
         resp.setAppCommitted(true);
-
-        ((HttpServletResponse) response).sendRedirect(location);
-
+        
+        ((HttpServletResponse)response).sendRedirect(location);
+        
     }
-
-
-    public void setDateHeader(String name, long date) {
-
+    
+    public void setDateHeader(String name, long date)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).setDateHeader(name, date);
-
+            
+        ((HttpServletResponse)response).setDateHeader(name, date);
+        
     }
-
-
-    public void addDateHeader(String name, long date) {
-
+    
+    public void addDateHeader(String name, long date)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).addDateHeader(name, date);
-
+            
+        ((HttpServletResponse)response).addDateHeader(name, date);
+        
     }
-
-
-    public void setHeader(String name, String value) {
-
+    
+    public void setHeader(String name, String value)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).setHeader(name, value);
-
+            
+        ((HttpServletResponse)response).setHeader(name, value);
+        
     }
-
-
-    public void addHeader(String name, String value) {
-
+    
+    public void addHeader(String name, String value)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).addHeader(name, value);
-
+            
+        ((HttpServletResponse)response).addHeader(name, value);
+        
     }
-
-
-    public void setIntHeader(String name, int value) {
-
+    
+    public void setIntHeader(String name, int value)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).setIntHeader(name, value);
-
+            
+        ((HttpServletResponse)response).setIntHeader(name, value);
+        
     }
-
-
-    public void addIntHeader(String name, int value) {
-
+    
+    public void addIntHeader(String name, int value)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).addIntHeader(name, value);
-
+            
+        ((HttpServletResponse)response).addIntHeader(name, value);
+        
     }
-
-
-    public void setStatus(int sc) {
-
+    
+    public void setStatus(int sc)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).setStatus(sc);
-
+            
+        ((HttpServletResponse)response).setStatus(sc);
+        
     }
-
-
-    public void setStatus(int sc, String sm) {
-
+    
+    public void setStatus(int sc, String sm)
+    {
+        
         if (isCommitted())
             return;
-
-        ((HttpServletResponse) response).setStatus(sc, sm);
-
+            
+        ((HttpServletResponse)response).setStatus(sc, sm);
+        
     }
-
-
+    
     @Override
     public String getContentType()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
+    
     @Override
     public void setCharacterEncoding(String charset)
     {
         // TODO Auto-generated method stub
         
     }
-
-
-    @Override
-    public void setContentLengthLong(long len)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public int getStatus()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    @Override
-    public String getHeader(String name)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Collection<String> getHeaders(String name)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public Collection<String> getHeaderNames()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
 }

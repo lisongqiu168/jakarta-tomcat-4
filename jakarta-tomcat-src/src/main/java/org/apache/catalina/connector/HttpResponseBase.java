@@ -1295,20 +1295,6 @@ public class HttpResponseBase extends ResponseBase implements HttpResponse, Http
     }
     
     @Override
-    public void setContentLengthLong(long len)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
-    public Collection<String> getHeaders(String name)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    @Override
     public Collection<String> getHeaderNames()
     {
         synchronized (headers)
